@@ -1,0 +1,28 @@
+# Nextflow
+work/
+.nextflow/
+.nextflow.log*
+results/
+results_test/
+
+# Data dan referensi (besar, tidak boleh masuk repo)
+data/
+ref/
+*.fastq.gz
+*.fq.gz
+*.bam
+*.bai
+*.cram
+*.crai
+*.vcf.gz
+*.tbi
+*.fa
+*.fasta
+*.fai
+*.dict
+
+# Metadata 1000 Genomes yang diunduh untuk memilih sampel
+*.sequence.index
+20130606_g1k_3202_samples_ped_population.txt
+
+.DS_Store

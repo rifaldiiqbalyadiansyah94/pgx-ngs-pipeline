@@ -1,0 +1,22 @@
+process BWAMEM2_ALIGN {
+    tag "$sample_id"
+
+    container 'quay.io/biocontainers/mulled-v2-e5d375990341c5aef3c9aff74f96f66f65375ef6:2d15960ccea84e249a150b7f5d4db3a42fc2d6c3-0'
+
+    input:
+    tuple val(sample_id), path(reads)
+    path fasta
+    path index
+
+    output:
+    tuple val(sample_id), path("${sample_id}.sorted.bam"), emit: bam
+
+    script:
+    """
+    bwa-mem2 mem \\
+        -t ${task.cpus} \\
+        -R "@RG\\tID:${sample_id}\\tSM:${sample_id}\\tPL:ILLUMINA\\tLB:${sample_id}" \\
+        ${fasta} ${reads[0]} ${reads[1]} \\
+      | samtools sort -@ ${task.cpus} -o ${sample_id}.sorted.bam -
+    """
+}

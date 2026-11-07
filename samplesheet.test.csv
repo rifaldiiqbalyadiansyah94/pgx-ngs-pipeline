@@ -1,0 +1,4 @@
+sample,sex,fastq_1,fastq_2
+NA12878,female,data/test/NA12878_R1.fastq.gz,data/test/NA12878_R2.fastq.gz
+NA19213,male,data/test/NA19213_R1.fastq.gz,data/test/NA19213_R2.fastq.gz
+NA18564,female,data/test/NA18564_R1.fastq.gz,data/test/NA18564_R2.fastq.gz
