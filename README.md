@@ -62,7 +62,7 @@ results/
   pipeline_info/ timeline, report, trace
 ```
 
-Example reports are in `docs/example_reports/`. Download the HTML files and open them in a browser.
+Live example reports: https://rifaldiiqbalyadiansyah94.github.io/pgx-ngs-pipeline/
 
 ## Validation
 
