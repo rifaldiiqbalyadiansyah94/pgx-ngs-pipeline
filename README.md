@@ -80,6 +80,15 @@ The remaining differences come from:
 - **DPYD**: one extra *5 allele in one sample.
 - **Correct calls of note**: NUDT15 *1/*3 (NA18564) and CYP2C9 *1/*6 (NA19213, an indel) were detected correctly.
 
+## Scope
+
+The pipeline reports the 21 genes that PharmCAT 3.4.0 calls directly from a VCF
+(ABCG2, CACNA1S, CFTR, CYP2B6, CYP2C19, CYP2C9, CYP3A4, CYP3A5, CYP4F2, DPYD, F2, F5,
+G6PD, IFNL3, NAT2, NUDT15, RYR1, SLCO1B1, TPMT, UGT1A1, VKORC1).
+Genes outside PharmCAT's scope (for example UGT2B7 and UGT2B17, which appear in the
+GeT-RM table) are not reported. CYP2D6 and HLA genes require an outside call.
+
+
 ## Limitations
 
 - CYP2D6 cannot be called from a VCF by PharmCAT (it needs a dedicated structural variant caller).
