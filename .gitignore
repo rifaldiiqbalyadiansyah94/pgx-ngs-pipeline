@@ -5,7 +5,7 @@ work/
 results/
 results_test/
 
-# Data dan referensi (besar, tidak boleh masuk repo)
+# Data and references (large, must not be committed)
 data/
 ref/
 *.fastq.gz
@@ -21,7 +21,7 @@ ref/
 *.fai
 *.dict
 
-# Metadata 1000 Genomes yang diunduh untuk memilih sampel
+# 1000 Genomes metadata downloaded to select samples
 *.sequence.index
 20130606_g1k_3202_samples_ped_population.txt
 

@@ -11,9 +11,9 @@ include { MULTIQC       } from './modules/multiqc/main.nf'
 
 workflow {
 
-    if (!params.input)         { error "Parameter --input (samplesheet CSV) wajib diisi" }
-    if (!params.fasta)         { error "Parameter --fasta (GRCh38, tidak terkompresi) wajib diisi" }
-    if (!params.pgx_positions) { error "Parameter --pgx_positions (pharmcat_positions.vcf) wajib diisi" }
+    if (!params.input)         { error "Parameter --input (samplesheet CSV) is required" }
+    if (!params.fasta)         { error "Parameter --fasta (GRCh38, uncompressed) is required" }
+    if (!params.pgx_positions) { error "Parameter --pgx_positions (pharmcat_positions.vcf) is required" }
 
     ch_samples = channel
         .fromPath(params.input, checkIfExists: true)

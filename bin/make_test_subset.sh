@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Pemakaian: bin/make_test_subset.sh <url|bam|cram> <pharmcat_positions.vcf> <sample_id> [ref.fa]
+# Usage: bin/make_test_subset.sh <url|bam|cram> <pharmcat_positions.vcf> <sample_id> [ref.fa]
 set -euo pipefail
 
 IN="$1"; POS="$2"; SAMPLE="$3"; REF="${4:-}"
@@ -25,12 +25,12 @@ for CHR in $(cut -f1 "$OUT/pgx_regions.bed" | uniq); do
       mv "$TMP/$CHR.bam.part" "$TMP/$CHR.bam"
       OK=1; break
     fi
-    echo "Percobaan $TRY untuk $CHR gagal, mengulang..." >&2
+    echo "Attempt $TRY for $CHR failed, retrying..." >&2
     rm -f "$TMP/$CHR.bam.part"
     sleep 5
   done
   [[ $OK -eq 1 ]] || { echo "GAGAL total di $CHR" >&2; exit 1; }
-  echo "Selesai $CHR"
+  echo "Done $CHR"
 done
 
 samtools merge -f -o "$OUT/${SAMPLE}.subset.bam" "$TMP"/chr*.bam
@@ -39,4 +39,4 @@ samtools collate -u -O "$OUT/${SAMPLE}.subset.bam" \
                    -2 "$OUT/${SAMPLE}_R2.fastq.gz" \
                    -0 /dev/null -s /dev/null -n -
 
-echo "Selesai: $OUT/${SAMPLE}_R1.fastq.gz dan _R2.fastq.gz"
+echo "Done: $OUT/${SAMPLE}_R1.fastq.gz and _R2.fastq.gz"
