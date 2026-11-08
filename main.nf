@@ -3,7 +3,7 @@
 include { PREPARE_REF   } from './modules/ref_index/main.nf'
 include { FASTQC        } from './modules/fastqc/main.nf'
 include { FASTP         } from './modules/fastp/main.nf'
-include { BWAMEM2_ALIGN } from './modules/bwa_mem2/main.nf'
+include { BWA_ALIGN } from './modules/bwa_mem2/main.nf'
 include { MARKDUP       } from './modules/markdup/main.nf'
 include { GATK_CALL     } from './modules/haplotypecaller/main.nf'
 include { RUN_PHARMCAT  } from './modules/pharmcat/main.nf'
@@ -44,12 +44,12 @@ workflow {
     FASTQC(ch_reads)
     FASTP(ch_reads)
 
-    BWAMEM2_ALIGN(
+    BWA_ALIGN(
         FASTP.out.reads,
         PREPARE_REF.out.fasta.first(),
         PREPARE_REF.out.bwa_index.first()
     )
-    MARKDUP(BWAMEM2_ALIGN.out.bam)
+    MARKDUP(BWA_ALIGN.out.bam)
 
     GATK_CALL(
         MARKDUP.out.bam,

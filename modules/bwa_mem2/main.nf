@@ -1,4 +1,4 @@
-process BWAMEM2_ALIGN {
+process BWA_ALIGN {
     tag "$sample_id"
 
     container 'quay.io/biocontainers/mulled-v2-fe8faa35dbf6dc65a0f7f5d4ea12e31a79f73e40:a34558545ae1413d94bde4578787ebef08027945-0'
