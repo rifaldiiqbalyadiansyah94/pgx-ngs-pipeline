@@ -5,8 +5,6 @@ process RUN_PHARMCAT {
 
     input:
     tuple val(sample_id), path(vcf), path(tbi)
-    path fasta
-    path fai
 
     output:
     tuple val(sample_id), path("${sample_id}.report.html"),    emit: html

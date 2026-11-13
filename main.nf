@@ -24,7 +24,8 @@ workflow {
             row.sample as String,
             [ file(row.fastq_1, checkIfExists: true),
               file(row.fastq_2, checkIfExists: true) ]
-        )
+ 
+       )
     }
 
     ch_samples
@@ -40,6 +41,10 @@ workflow {
     PREPARE_REF(ch_fasta)
 
     ch_pgx_pos = file(params.pgx_positions, checkIfExists: true)
+
+// gunakan channel.fromPath jika ingin membuat aliran data (stream) yang dapat berisi banyak file sekaligus (seperti file-file fastq sampel pasien yang jumlahnya banyak)
+// gunakan file jika ingin mengambil satu file referensi statis tunggal dengan cepat untuk keperluan konfigurasi atau pendukung modul analisis.
+
 
     FASTQC(ch_reads)
     FASTP(ch_reads)
@@ -59,11 +64,7 @@ workflow {
         ch_pgx_pos
     )
 
-    RUN_PHARMCAT(
-        GATK_CALL.out.vcf,
-        PREPARE_REF.out.fasta.first(),
-        PREPARE_REF.out.fai.first()
-    )
+    RUN_PHARMCAT(GATK_CALL.out.vcf)
 
     ch_qc = FASTQC.out.zip.map { id, f -> f }
         .mix(FASTP.out.json.map { id, f -> f })
