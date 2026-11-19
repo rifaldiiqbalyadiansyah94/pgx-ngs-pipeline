@@ -68,23 +68,31 @@ Live example reports: https://rifaldiiqbalyadiansyah94.github.io/pgx-ngs-pipelin
 
 Test data are 30x NYGC 1000 Genomes samples, subset to reads around PGx genes (±1 kb) and compared with the GeT-RM (CDC) consensus genotypes:
 
-| Sample | Sex | Population | Genes matching exactly |
-|---|---|---|---|
-| NA12878 | female | CEU | 10 |
-| NA19213 | male | YRI | 8 |
-| NA18564 | female | CHB | 10 |
+| Sample | Sex | Population | Genes compared | Exact match |
+|---|---|---|---|---|
+| NA12878 | female | CEU | 12 | 10 |
+| NA19213 | male | YRI | 12 | 8 |
+| NA18564 | female | CHB | 13 | 10 |
+
+All clinically relevant alleles agree in all three samples: CYP2C19 *2/*3, CYP2C9 *2/*6 (including the indel), CYP3A5 *3/*6, CYP2B6 *6, NUDT15 *3 and VKORC1. No case shows opposite genotypes for the same allele.
 
 The remaining differences come from:
 - **Nomenclature**: UGT1A1 (*60 is not defined in PharmCAT), SLCO1B1 (*37 = c.388A>G, formerly *1B), CYP3A4 *1B, NAT2 (old nomenclature in GeT-RM).
-- **CYP4F2**: the pipeline calls *3/*4 while GeT-RM reports *3/*3. The *4 variant is supported by the reads (24 of 43).
-- **DPYD**: one extra *5 allele in one sample.
+- **CYP4F2**: the pipeline calls *3/*4 while GeT-RM reports *3/*3 in NA18564. The *4 variant is supported by the reads (24 of 43).
+- **DPYD**: one extra *5 allele in each of NA12878 and NA18564. NA18564 also carries *9A, matching GeT-RM *9.
 - **Correct calls of note**: NUDT15 *1/*3 (NA18564) and CYP2C9 *1/*6 (NA19213, an indel) were detected correctly.
+
 > **Interpreting the comparison.** GeT-RM genotypes come from targeted assays: alleles
 > confirmed by fewer than two assays are shown in parentheses, and a `*1` call only means no
 > variant was found at the positions tested. Differences where the pipeline reports an
 > additional variant (for example DPYD *5, c.1627A>G, in NA12878) were checked against the
 > aligned reads: 18 of 28 reads carry the alternate allele, supporting a true heterozygous
 > call. Both DPYD *4 and *5 are normal-function alleles, so the phenotype is unchanged.
+
+Notes on what could not be compared:
+- GeT-RM has no columns for ABCG2, CACNA1S, CFTR, F2, F5, G6PD, IFNL3 and RYR1, so these 8 genes are reported by the pipeline but not validated here.
+- CYP2D6 (for example *3/(*68)+*4 in NA12878) is not called from the VCF and is excluded from the counts.
+- VKORC1 is written GG/GA/AA in GeT-RM (transcript strand) and C/C, C/T, T/T by PharmCAT (genome strand); they are equivalent.
 
 ## Scope
 
