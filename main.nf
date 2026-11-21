@@ -56,12 +56,18 @@ workflow {
     )
     MARKDUP(BWA_ALIGN.out.bam)
 
+    // Attach sex (from the samplesheet) to each BAM so GATK can use haploid calls on male chrX
+    ch_sex = ch_samples.map { row -> tuple(row.sample as String, (row.sex ?: 'NA').toLowerCase()) }
+    ch_bam_sex = MARKDUP.out.bam.join(ch_sex)
+    ch_ploidy_bed = file("${projectDir}/assets/chrX_nonpar_ploidy1.bed", checkIfExists: true)
+
     GATK_CALL(
-        MARKDUP.out.bam,
+        ch_bam_sex,
         PREPARE_REF.out.fasta.first(),
         PREPARE_REF.out.fai.first(),
         PREPARE_REF.out.dict.first(),
-        ch_pgx_pos
+        ch_pgx_pos,
+        ch_ploidy_bed
     )
 
     RUN_PHARMCAT(GATK_CALL.out.vcf)

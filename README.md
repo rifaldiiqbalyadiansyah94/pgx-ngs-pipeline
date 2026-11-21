@@ -108,7 +108,7 @@ GeT-RM table) are not reported. CYP2D6 and HLA genes are not called by this pipe
 - CYP2D6 cannot be called from a VCF by PharmCAT (it needs a dedicated structural variant caller).
 - HLA genes are not covered.
 - Indel/repeat positions can be flagged "missing variant input" because GATK reference records have a different form than PharmCAT expects. Variants that are actually present are still detected.
-- Male chrX is called diploid (PharmCAT accepts homozygous calls; hemizygous ploidy is not implemented).
+- Sex-aware calling covers non-PAR chrX only: males (`sex = male` in the samplesheet) are called with ploidy 1 there (`--ploidy-regions`, see `assets/chrX_nonpar_ploidy1.bed`), everyone else with ploidy 2. PharmCAT then reports a single allele for male X-linked genes such as G6PD (for example `B (reference)`). Any `sex` value other than `male` is treated as diploid, and chrY is not handled.
 - Resources are tuned for a 15 GB RAM / 12 CPU machine, so adjust the per-process settings in `nextflow.config` for a server.
 - For DPYD (and RYR1), unphased VCF input yields a list of detected variants rather than a single diplotype: `diplotypes` is empty in `match.json`, while the HTML report lists the variants and the resulting phenotype.
 - DPYD *3 (c.1898delC) and *7 (c.295_298delTCAT) are flagged as "not considered" because GATK reference records at these indel positions do not match the reference allele PharmCAT expects, so their absence cannot be confirmed.
